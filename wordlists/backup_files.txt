@@ -1,0 +1,12 @@
+backup.zip
+backup.tar.gz
+backup.sql
+backup.bak
+site.zip
+site.tar.gz
+www.zip
+www.tar.gz
+config.json
+config.php
+.env
+.env.bak
