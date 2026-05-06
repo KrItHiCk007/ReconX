@@ -34,49 +34,52 @@
 
 ---
 
-## Requirements
-
-### Python
-
-Python **3.10+** required.
-
-```bash
-python3 --version   # must be >= 3.10
-```
-
-### Python packages
-
-```
-httpx[http2]==0.27.0
-dnspython==2.6.1
-rich==13.7.1
-```
-
-```bash
-pip install -r requirements.txt
-```
-
-### Optional external tools
-
-Detected at runtime — ReconX works without them but they expand subdomain coverage.
-
-| Tool | Install | What it adds |
-|------|---------|--------------|
-| [subfinder](https://github.com/projectdiscovery/subfinder) | `go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest` | Passive OSINT enumeration |
-| [findomain](https://github.com/Findomain/Findomain) | Binary from [releases](https://github.com/Findomain/Findomain/releases) | CT log aggregation |
-| [assetfinder](https://github.com/tomnomnom/assetfinder) | `go install github.com/tomnomnom/assetfinder@latest` | Passive enumeration |
-
-All three must be in `$PATH` to be picked up.
-
----
-
 ## Installation
+
+Clone and run the installer — it handles everything:
 
 ```bash
 git clone https://github.com/KrItHiCk007/ReconX.git
 cd ReconX
+chmod +x install.sh && ./install.sh
+```
+
+The installer:
+1. Verifies Python 3.10+
+2. Installs Python dependencies (`httpx`, `dnspython`, `rich`)
+3. Installs **subfinder** and **assetfinder** via `go install` (if Go is present)
+4. Downloads the **findomain** binary from GitHub releases (Linux x86\_64/arm64, macOS)
+5. Prints a tool availability summary
+
+> **Go required** for subfinder and assetfinder. Install from [go.dev/dl](https://go.dev/dl/) then re-run `./install.sh`.
+
+### Manual dependency install (no script)
+
+```bash
 pip install -r requirements.txt
 ```
+
+### What each external tool adds
+
+| Tool | What it adds |
+|------|--------------|
+| [subfinder](https://github.com/projectdiscovery/subfinder) | Passive OSINT enumeration |
+| [findomain](https://github.com/Findomain/Findomain) | CT log aggregation (high volume) |
+| [assetfinder](https://github.com/tomnomnom/assetfinder) | Additional passive sources |
+
+All three are **optional** — ReconX runs without them using crt.sh + DNS brute force.
+
+---
+
+## Requirements
+
+| Requirement | Version | Notes |
+|-------------|---------|-------|
+| Python | 3.10+ | `str \| None` union syntax used |
+| httpx[http2] | 0.27.0 | Async HTTP client |
+| dnspython | 2.6.1 | DNS resolution |
+| rich | 13.7.1 | Terminal output |
+| Go | 1.18+ | Only needed for subfinder/assetfinder |
 
 ---
 
